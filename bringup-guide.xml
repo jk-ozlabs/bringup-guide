@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<book>
+ <bookinfo>
+  <title>OpenPOWER runtime firmware bringup guide</title>
+  <subtitle>OPAL, Linux and Petitboot</subtitle>
+  <authorgroup>
+   <author>
+    <firstname>Jeremy</firstname>
+    <surname>Kerr</surname>
+    <email>jk@ozlabs.org</email>
+   </author>
+  </authorgroup>
+ </bookinfo>
+
+ <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="opal.xml"/>
+ <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="linux.xml"/>
+ <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="petitboot.xml"/>
+ <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="testing.xml"/>
+
+ <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="checklist.xml"/>
+
+</book>

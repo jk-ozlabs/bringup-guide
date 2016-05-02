@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<chapter>
+ <title>OPAL firmware</title>
+ <para>The Open Power Abstraction Layer (OPAL) firmware provides a set of
+  abstractions on top of POWER hardware, providing a standard interface for
+  the operating system to perform hardware-specific functions. The
+  implmentation of OPAL firmware is called "skiboot".</para>
+
+ <!-- todo: skiboot source reference -->
+ <!-- todo: skiboot technical references -->
+ <!-- todo: skiboot community resources -->
+
+ <section>
+  <title>Platform definitions</title>
+
+  <para>Each hardware platform that skiboot supports is described by a "platform
+   file" - a C file that defines a <type>struct platform</type>, using the
+   <function>DECLARE_PLATFORM</function> macro. These board files are
+   located under the <filename>platforms/</filename> directory of the skiboot
+   source tree. <xref linkend="firestone-platform-def"/> shows the
+   definition for the Firestone platform, as an example.</para>
+
+  <example id="firestone-platform-def">
+   <title>Platform definition for Firestone</title>
+   <programlisting language="c">DECLARE_PLATFORM(firestone) = {
+        .name                   = "Firestone",<co id="firestone-platform-def-name"/>
+        .probe                  = firestone_probe,<co id="firestone-platform-def-probe"/>
+        .init                   = astbmc_init,
+        .pci_get_slot_info      = slot_table_get_slot_info,
+        .external_irq           = astbmc_ext_irq_serirq_cpld,
+        .cec_power_down         = astbmc_ipmi_power_down,
+        .cec_reboot             = astbmc_ipmi_reboot,
+        .elog_commit            = ipmi_elog_commit,
+        .start_preload_resource = flash_start_preload_resource,
+        .resource_loaded        = flash_resource_loaded,
+        .exit                   = ipmi_wdt_final_reset,
+        .terminate              = ipmi_terminate,
+};</programlisting>
+  </example>
+
+  <para>Although there are a number of platform “hooks” (like
+   <varname>.probe</varname>, <varname>.init</varname> and
+   <varname>.pci_get_slot_info</varname>), most platforms will only need
+   one or two of their own implementations of these hooks, and can use
+   generic definitions for the others. For OpenPOWER platforms, it's likely
+   that you will only need to change the <varname>.name</varname> and
+   <varname>.probe</varname> definitions for a new platform.</para>
+
+
+  <para>The <varname>.name</varname> member of the platform definition (at <xref
+    linkend="firestone-platform-def-name"/>) is just a human-readable string,
+   giving the name of the platform. This is used in a few places of firmware log
+   output (and generally isn't visible to the end-user).</para>
+
+  <para>The <varname>.probe</varname> callback (at <xref
+   linkend="firestone-platform-def-probe"/>) provided by your platform is
+   important; it allows skiboot to detect whether the platform definition
+   matches the hardware that skiboot is running on. A single build of skiboot is
+   compatible with a number of different platforms, so it needs to check
+   each definition to determine which to use. An implementation of a
+   <varname>.probe</varname> call will return <varname>true</varname> if the
+   current platform should be used, and <varname>false</varname>
+   otherwise. <xref linkend="firestone-platform-probe"/> shows the probe
+   function for the Firestone platform.</para>
+
+  <example id="firestone-platform-probe">
+   <title>Platform probe function for firestone</title>
+   <programlisting language="c"><![CDATA[static bool firestone_probe(void)
+{
+        if (!dt_node_is_compatible(dt_root, "ibm,firestone"))
+                return false;
+
+        /* Lot of common early inits here */
+        astbmc_early_init();
+        slot_table_init(firestone_phb_table);
+
+        return true;
+}]]></programlisting>
+  </example>
+  
+  <para>A probe function will almost always perform a check on the device tree's
+   top-level "compatible" property, to determine if the current hardware matches
+   the platform definition. In <xref linkend="firestone-platform-probe"/>,
+   this the <function>firestone_probe</function> function checks whether
+   the device tree's compatible property contains the string
+   <constant>ibm,firestone</constant>.</para>
+
+  <section id="opal-platform-add">
+   <title>Adding a new platform definition</title>
+
+   <para>During platform bringup, you will need to add a new platform definition
+    to skiboot. This involves adding a new C file under
+    <filename>platforms/</filename>; for AST-BMC-based machines, use
+    <filename>platforms/astbmc/</filename>. This file should have a name
+    matching your platform name (for example, <filename>firestone.c</filename>
+    for the IBM Firestone platform).</para>
+
+   <!-- todo: platform definition compatible name warning -->
+  </section>
+
+  <section id="opal-platform-slot-table">
+   <title>PCI slot tables</title>
+   <para>Another component of the OPAL platform defintion is the PCI slot
+    tables. These define the physical layout of the PCI bus hardware, and
+    assign names to individual slots (whether or not those slots have a
+    user-accessible connector).</para>
+
+   <para>PCI slot tables are completely optional. However, if a slot table is
+    present, it must be correct.</para>
+
+   <warning>
+    <para>A PCI slot table can only be manually verified as correct. If in
+     doubt, disable the slot table.</para>
+   </warning>
+
+   <!-- todo: purpose of slot table -->
+   <!-- todo: writing a slot table -->
+   <!-- todo: verifying a slot table -->
+
+  </section>
+
+ </section>
+
+</chapter>

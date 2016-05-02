@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appendix>
+ <title>Bringup checklist</title>
+
+ <table>
+  <title>Bringup checklist</title>
+  <tgroup cols="3" align="left">
+   <colspec colname="c1" colwidth="*"/>
+   <colspec colname="c2" colwidth="3pc"/>
+   <colspec colname="c3" colwidth="2.5pc"/>
+   <thead>
+    <row>
+     <entry>Item</entry>
+     <entry>Ref</entry>
+     <entry>OK?</entry>
+    </row>
+   </thead>
+   <tbody>
+
+    <!-- OPAL -->
+
+    <row>
+     <entry>New OPAL platform definition file added</entry>
+     <entry>
+      <xref linkend="opal-platform-add" xrefstyle="select: labelnumber"/>
+     </entry>
+    </row>
+
+    <row>
+     <entry>Platform probe function uses a unique compatible string</entry>
+     <entry>
+      <xref linkend="opal-platform-add" xrefstyle="select: labelnumber"/>
+     </entry>
+    </row>
+
+    <row>
+     <entry>OPAL PCI slot tables updated, if present</entry>
+     <entry>
+      <xref linkend="opal-platform-slot-table" xrefstyle="select: labelnumber"/>
+     </entry>
+    </row>
+
+    <!-- petitboot -->
+    <row>
+     <entry>Machine type &amp; model displayed correctly in Petitboot UI</entry>
+    </row>
+
+   </tbody>
+  </tgroup>
+ </table>
+</appendix>
