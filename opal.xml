@@ -95,7 +95,38 @@
     matching your platform name (for example, <filename>firestone.c</filename>
     for the IBM Firestone platform).</para>
 
-   <!-- todo: platform definition compatible name warning -->
+   <para>There are two platforms that are useful as a reference, as they
+    provide a fairly complete definition of an OpenPOWER platform, and
+    can be used as a base for new platform support. They are:</para>
+
+   <itemizedlist>
+    <listitem>
+     <para>Palmetto (<filename>platforms/astbmc/palmetto.c</filename>),
+      a single-socket reference design, used as the original OpenPOWER
+      development platform; and</para>
+    </listitem>
+    <listitem>
+     <para>Firestone (<filename>platforms/astbmc/firestone.c</filename>),
+      a two-socket reference design.</para>
+    </listitem>
+   </itemizedlist>
+
+   <para>You may want to base your new platform on one of these designs, and
+    use the existing platform file as a starting point for OPAL support.</para>
+
+   <para>If you do use an existing platform to start your OPAL port, you
+    <emphasis>must</emphasis> change the "compatible" value that is
+    used to identify your hardware. This will involve changing the
+    <varname>OPAL_MODEL</varname> parameter in the system MRW, and the
+    <function>dt_node_is_compatible()</function> call in your OPAL platform
+    probe function</para>
+
+   <warning>
+    <para>Failing to change the compatible string from a reference-platform
+     identifier will cause your platform to fail OpenPOWER compliance
+     checks.</para>
+   </warning>
+
   </section>
 
   <section id="opal-platform-slot-table">
