@@ -146,6 +146,47 @@
      doubt, disable the slot table.</para>
    </note>
 
+   <para><xref linkend="simple-slot-table"/> shows an example slot-table
+    defintion, describing a PCI host bridge (<varname>phb_table</varname>), and
+    with two sets of "downstream" ports (<varname>slot_table_0</varname> and
+    <varname>slot_table_1</varname>). Note that each array is terminated by
+    an entry with <varname>etype</varname> of
+    <constant>st_end</constant>.</para>
+
+   <example id="simple-slot-table">
+    <title>Simple slot table</title>
+    <programlisting language="c"><![CDATA[static const struct slot_table_entry phb_table[] = {
+        {
+                .etype = st_phb,
+                .location = ST_LOC_PHB(0,0),
+                .children = slot_table_0,
+        },
+        {
+                .etype = st_phb,
+                .location = ST_LOC_PHB(0,1),
+                .children = slot_table_1,
+        },
+        { .etype = st_end },
+};
+
+static const struct slot_table_entry slot_table_0[] = {
+        {
+                .etype = st_pluggable_slot,
+                .location = ST_LOC_DEVFN(0,0),
+                .name = "Slot 1",
+        },
+        {
+                .etype = st_builtin_dev,
+                .location = ST_LOC_DEVFN(1,0),
+                .name = "Built-in network device",
+        },
+        { .etype = st_end },
+};
+
+/* slot_table_1 definition omitted */]]></programlisting>
+   </example>
+
+
    <para>The slot table definitions create a tree-like heirachy of slot
     definitions. Each definition is a <type>struct slot_table_entry</type>, and
     has a "type"; one of:</para>
