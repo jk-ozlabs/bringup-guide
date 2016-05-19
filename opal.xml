@@ -139,10 +139,10 @@
    <para>PCI slot tables are completely optional. However, if a slot table is
     present, it must be correct.</para>
 
-   <warning>
+   <note>
     <para>A PCI slot table can only be manually verified as correct. If in
      doubt, disable the slot table.</para>
-   </warning>
+   </note>
 
    <!-- todo: purpose of slot table -->
    <!-- todo: writing a slot table -->
