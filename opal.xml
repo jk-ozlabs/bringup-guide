@@ -134,7 +134,9 @@
    <para>Another component of the OPAL platform defintion is the PCI slot
     tables. These define the physical layout of the PCI bus hardware, and
     assign names to individual slots (whether or not those slots have a
-    user-accessible connector).</para>
+    user-accessible connector). These provide human-readable names to the
+    hardware slots, so that slots can be identified by name, and can
+    match names used in any platform documentation.</para>
 
    <para>PCI slot tables are completely optional. However, if a slot table is
     present, it must be correct.</para>
@@ -144,8 +146,32 @@
      doubt, disable the slot table.</para>
    </note>
 
-   <!-- todo: purpose of slot table -->
-   <!-- todo: writing a slot table -->
+   <para>The slot table definitions create a tree-like heirachy of slot
+    definitions. Each definition is a <type>struct slot_table_entry</type>, and
+    has a "type"; one of:</para>
+
+   <itemizedlist>
+    <listitem>
+     <para><constant>st_phb</constant> - for a PCI host bridge,</para>
+    </listitem>
+    <listitem>
+     <para><constant>st_builtin_dev</constant> - for a built-in device;
+      and</para>
+    </listitem>
+    <listitem>
+     <para><constant>st_pluggable_slot</constant> - for a user-accessible
+      PCI slot.</para>
+    </listitem>
+   </itemizedlist>
+
+   <para>Slot definitions of type <constant>st_phb</constant> must have a
+    <varname>children</varname> member, which is a pointer to an array
+    of slot_table_entry structures. This creates the tree-like heriachy to
+    match the hardware layout.</para>
+
+   <!-- todo: example slot table entries & structure -->
+   <!-- todo: slot lists & st_end terminator -->
+   <!-- todo: hooking a slot table into the platform definition -->
    <!-- todo: verifying a slot table -->
 
   </section>
