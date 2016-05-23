@@ -3,11 +3,18 @@
  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
  xmlns:fo="http://www.w3.org/1999/XSL/Format"
  version="1.0">
+
+ <xsl:import
+  href="/usr/share/xml/docbook/stylesheet/docbook-xsl/fo/docbook.xsl"/>
+ <xsl:import href="fo-highlight.xsl"/>
+
  <xsl:output method="xml"/>
 
  <xsl:param name="paper.type">A4</xsl:param>
 
  <xsl:param name="body.start.indent">0</xsl:param>
+
+ <xsl:param name="highlight.source" select="1"/>
 
  <!-- label all section numbers, so that we can cross-reference to specific
       sections -->
@@ -20,8 +27,5 @@
 
  <xsl:param name="callout.graphics">0</xsl:param>
  <xsl:param name="callout.unicode">1</xsl:param>
-
- <xsl:include
-  href="/usr/share/xml/docbook/stylesheet/docbook-xsl/fo/docbook.xsl"/>
 
 </xsl:stylesheet>

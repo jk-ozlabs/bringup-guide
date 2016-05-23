@@ -1,9 +1,0 @@
-#!/bin/sh
-
-(
-	printf '%s: \\\n' "$2"
-	awk -F\" \
-		'/^Loaded URL=/ {print "\t" $2 " \\"; next}
-		{print >"/dev/stderr"}'
-	printf '\n'
-) >$1
