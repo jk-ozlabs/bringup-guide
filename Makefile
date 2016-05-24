@@ -19,7 +19,7 @@ pdf: $(obj).pdf
 	fop -fo $^ -pdf $@
 
 %.fo: %.xml $(stylesheet)
-	java -cp "$(java_libdir)/saxonb.jar:$(java_libdir)/xercesImpl.jar:$(java_libdir)/xslthl.jar" \
+	java -cp "$(java_libdir)/saxon.jar:$(java_libdir)/xercesImpl.jar:$(java_libdir)/xslthl.jar" \
 		-Dxslthl.config=file://$(xml_dir)/docbook/stylesheet/docbook-xsl/highlighting/xslthl-config.xml \
 		-Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl \
 		-Djavax.xml.parsers.SAXParserFactory=org.apache.xerces.jaxp.SAXParserFactoryImpl \
