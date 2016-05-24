@@ -2,6 +2,7 @@
 <xsl:stylesheet
  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
  xmlns:fo="http://www.w3.org/1999/XSL/Format"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
  version="1.0">
 
  <xsl:import
@@ -27,5 +28,14 @@
 
  <xsl:param name="callout.graphics">0</xsl:param>
  <xsl:param name="callout.unicode">1</xsl:param>
+
+ <xsl:attribute-set name="xref.properties">
+   <xsl:attribute name="color">
+    <xsl:choose>
+     <xsl:when test="@xlink:href">#000080</xsl:when>
+     <xsl:otherwise>inherit</xsl:otherwise>
+    </xsl:choose>
+   </xsl:attribute>
+ </xsl:attribute-set>
 
 </xsl:stylesheet>
