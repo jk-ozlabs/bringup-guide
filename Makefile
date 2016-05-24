@@ -7,7 +7,8 @@ obj = bringup-guide
 docbook_version = 5.0
 docbook_schema = $(xml_dir)/docbook/schema/rng/$(docbook_version)/docbook.rng
 
-.PHONY: all check clean
+.PHONY: all check clean pdf
+.SECONDARY:
 
 all: pdf
 
@@ -19,6 +20,9 @@ pdf: $(obj).pdf
 	fop -fo $^ -pdf $@
 
 %.fo: %.xml $(stylesheet)
+	java -cp "$(java_libdir)/saxon.jar" \
+		com.icl.saxon.StyleSheet \
+		-o $*.d $< utils/deps.xsl base=$< target=$@ || true
 	java -cp "$(java_libdir)/saxon.jar:$(java_libdir)/xercesImpl.jar:$(java_libdir)/xslthl.jar" \
 		-Dxslthl.config=file://$(xml_dir)/docbook/stylesheet/docbook-xsl/highlighting/xslthl-config.xml \
 		-Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl \
