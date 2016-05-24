@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<chapter xmlns="http://docbook.org/ns/docbook">
+<chapter
+ xmlns="http://docbook.org/ns/docbook"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ >
  <title>OPAL firmware</title>
  <para>The Open Power Abstraction Layer (OPAL) firmware provides a set of
   abstractions on top of POWER hardware, providing a standard interface for
   the operating system to perform hardware-specific functions. The
   implmentation of OPAL firmware is called "skiboot".</para>
+
+ <para>Skiboot source code is hosted in an OpenPOWER github repository, at
+  <link xlink:href="https://github.com/open-power/skiboot"/>. This includes a
+  set of technical documentation, browseable at <link
+  xlink:href="https://github.com/open-power/skiboot/tree/master/doc"/>.</para>
 
  <!-- todo: skiboot source reference -->
  <!-- todo: skiboot technical references -->
@@ -216,6 +224,15 @@ static const struct slot_table_entry slot_table_0[] = {
    <!-- todo: verifying a slot table -->
 
   </section>
+
+ </section>
+
+ <section>
+  <title>Upstreaming OPAL changes</title>
+
+  <para>Your changes to OPAL code can be upstreamed by sending patches to
+   the "skiboot" mailing list, at
+   <email>skiboot@lists.ozlabs.org</email>.</para>
 
  </section>
 
