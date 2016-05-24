@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<appendix>
+<appendix xmlns="http://docbook.org/ns/docbook">
  <title>Bringup checklist</title>
 
  <table>

@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<book xmlns:xi="http://www.w3.org/2001/XInclude">
- <bookinfo>
+<book
+ xmlns="http://docbook.org/ns/docbook"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ version="5.0"
+ >
+ <info>
   <title>OpenPOWER runtime firmware bringup guide</title>
   <subtitle>OPAL, Linux and Petitboot</subtitle>
   <authorgroup>
    <author>
-    <firstname>Jeremy</firstname>
-    <surname>Kerr</surname>
+    <personname>
+     <firstname>Jeremy</firstname>
+     <surname>Kerr</surname>
+    </personname>
     <email>jk@ozlabs.org</email>
    </author>
   </authorgroup>
- </bookinfo>
+ </info>
 
  <xi:include href="opal.xml"/>
  <xi:include href="linux.xml"/>

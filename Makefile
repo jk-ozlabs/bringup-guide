@@ -4,8 +4,8 @@ java_libdir=/usr/share/java
 xml_dir=/usr/share/xml
 obj = bringup-guide
 
-dtd_version = 4
-dtd = $(xml_dir)/docbook/schema/dtd/$(dtd_version)/docbookx.dtd
+docbook_version = 5.0
+docbook_schema = $(xml_dir)/docbook/schema/rng/$(docbook_version)/docbook.rng
 
 .PHONY: all check clean
 
@@ -28,7 +28,7 @@ pdf: $(obj).pdf
 		-o $@ $< $(stylesheet)
 
 check:
-	xmllint --dtdvalid $(dtd) --nonet --xinclude --noout $(obj).xml
+	xmllint --relaxng $(docbook_schema) --nonet --xinclude --noout $(obj).xml
 
 clean:
 	rm -f *.pdf *.fo *.d

@@ -6,7 +6,7 @@
  version="1.0">
 
  <xsl:import
-  href="/usr/share/xml/docbook/stylesheet/docbook-xsl/fo/highlight.xsl"/>
+  href="/usr/share/xml/docbook/stylesheet/docbook-xsl-ns/fo/highlight.xsl"/>
 
  <xsl:template match="xslthl:comment" mode="xslthl">
   <fo:inline color="#f000c0"><xsl:apply-templates mode="xslthl"/></fo:inline>

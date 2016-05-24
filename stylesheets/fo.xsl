@@ -5,7 +5,7 @@
  version="1.0">
 
  <xsl:import
-  href="/usr/share/xml/docbook/stylesheet/docbook-xsl/fo/docbook.xsl"/>
+  href="/usr/share/xml/docbook/stylesheet/docbook-xsl-ns/fo/docbook.xsl"/>
  <xsl:import href="fo-highlight.xsl"/>
 
  <xsl:output method="xml"/>

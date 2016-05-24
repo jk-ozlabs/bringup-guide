@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<chapter>
+<chapter xmlns="http://docbook.org/ns/docbook">
  <title>OPAL firmware</title>
  <para>The Open Power Abstraction Layer (OPAL) firmware provides a set of
   abstractions on top of POWER hardware, providing a standard interface for
@@ -20,11 +20,11 @@
    source tree. <xref linkend="firestone-platform-def"/> shows the
    definition for the Firestone platform, as an example.</para>
 
-  <example id="firestone-platform-def">
+  <example xml:id="firestone-platform-def">
    <title>Platform definition for Firestone</title>
    <programlisting language="c">DECLARE_PLATFORM(firestone) = {
-        .name                   = "Firestone",<co id="firestone-platform-def-name"/>
-        .probe                  = firestone_probe,<co id="firestone-platform-def-probe"/>
+        .name                   = "Firestone",<co xml:id="firestone-platform-def-name"/>
+        .probe                  = firestone_probe,<co xml:id="firestone-platform-def-probe"/>
         .init                   = astbmc_init,
         .pci_get_slot_info      = slot_table_get_slot_info,
         .external_irq           = astbmc_ext_irq_serirq_cpld,
@@ -63,7 +63,7 @@
    otherwise. <xref linkend="firestone-platform-probe"/> shows the probe
    function for the Firestone platform.</para>
 
-  <example id="firestone-platform-probe">
+  <example xml:id="firestone-platform-probe">
    <title>Platform probe function for firestone</title>
    <programlisting language="c"><![CDATA[static bool firestone_probe(void)
 {
@@ -85,7 +85,7 @@
    the device tree's compatible property contains the string
    <constant>ibm,firestone</constant>.</para>
 
-  <section id="opal-platform-add">
+  <section xml:id="opal-platform-add">
    <title>Adding a new platform definition</title>
 
    <para>During platform bringup, you will need to add a new platform definition
@@ -129,7 +129,7 @@
 
   </section>
 
-  <section id="opal-platform-slot-table">
+  <section xml:id="opal-platform-slot-table">
    <title>PCI slot tables</title>
    <para>Another component of the OPAL platform defintion is the PCI slot
     tables. These define the physical layout of the PCI bus hardware, and
@@ -153,7 +153,7 @@
     an entry with <varname>etype</varname> of
     <constant>st_end</constant>.</para>
 
-   <example id="simple-slot-table">
+   <example xml:id="simple-slot-table">
     <title>Simple slot table</title>
     <programlisting language="c"><![CDATA[static const struct slot_table_entry phb_table[] = {
         {

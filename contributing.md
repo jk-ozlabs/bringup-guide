@@ -38,15 +38,15 @@ fop, xsl stylesheets and syntax highlighting.
 
 You'll need:
   * A working java environment
-  * The docbook stylesheets
+  * The docbook 5 schema & stylesheets
   * The saxon XML library
   * The xslthl syntax highighter
   * The apache formatting objects processor (fop) package
 
 On an Ubuntu machine, you should be able to:
 
-    sudo apt-get install docbook-xsl libsaxon-java libxerces2-java \
-	    libxslthl-java fop
+    sudo apt-get install docbook-xsl-ns docbook5-xml \
+	    libsaxon-java libxerces2-java libxslthl-java fop
 
 The makefile & XSL sources expect system XML data to be installed in
 `/usr/share/xml`, and the java libraries under `/usr/share/java`. If this isn't
