@@ -1,0 +1,3 @@
+[submodule "openpower-docs"]
+	path = openpower-docs
+	url = https://github.com/open-power/docs
