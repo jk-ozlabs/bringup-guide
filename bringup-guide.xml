@@ -24,5 +24,7 @@
  <xi:include href="testing.xml"/>
 
  <xi:include href="checklist.xml"/>
+ <xi:include href="petitboot-environment-spec.xml"/>
+ <xi:include href="petitboot-plugin-spec.xml"/>
 
 </book>

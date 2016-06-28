@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appendix
+ xmlns="http://docbook.org/ns/docbook"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ id="petitboot-plugin-spec"
+ >
+ <title>Petitboot plugin specification</title>
+ <para>This specification describes the behaviour and interfaces provided
+  by, and made available to, extensions to the petitboot environment. The
+  text below is a snapshot of the specificiation wording; the most
+  recent version is available in the OpenPOWER documents repository, at
+  <link xlink:href="https://github.com/open-power/docs/"/>.</para>
+
+ <literallayout class="monospaced">
+<xi:include href="openpower-docs/opal/petitboot-plugins.txt" parse="text"/>
+ </literallayout>
+</appendix>
