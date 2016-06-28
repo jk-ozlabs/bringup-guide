@@ -17,6 +17,8 @@
 
  <xsl:param name="highlight.source" select="1"/>
 
+ <xsl:param name="monospace.font.family">Inconsolata</xsl:param>
+
  <!-- label all section numbers, so that we can cross-reference to specific
       sections -->
  <xsl:param name="section.autolabel">1</xsl:param>

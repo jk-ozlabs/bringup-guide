@@ -17,7 +17,7 @@ pdf: $(obj).pdf
 -include *.d
 
 %.pdf: %.fo
-	fop -fo $^ -pdf $@
+	fop -c fopconfig.xml -fo $^ -pdf $@
 
 %.fo: %.xml $(stylesheet)
 	java -cp "$(java_libdir)/saxon.jar" \
