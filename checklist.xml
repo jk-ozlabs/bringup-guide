@@ -40,6 +40,28 @@
      </entry>
     </row>
 
+    <!-- linux -->
+    <row>
+     <entry>No Linux runtime warnings</entry>
+     <entry>
+      <xref linkend="linux-warning" xrefstyle="select: labelnumber"/>
+     </entry>
+    </row>
+
+    <row>
+     <entry>No Linux soft lockups</entry>
+     <entry>
+      <xref linkend="linux-soft-lockups" xrefstyle="select: labelnumber"/>
+     </entry>
+    </row>
+
+    <row>
+     <entry>LPC/UART interrupt is functional</entry>
+     <entry>
+      <xref linkend="linux-lpc-serirq" xrefstyle="select: labelnumber"/>
+     </entry>
+    </row>
+
     <!-- petitboot -->
     <row>
      <entry>Machine type &amp; model displayed correctly in Petitboot UI</entry>

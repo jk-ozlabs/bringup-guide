@@ -1,5 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <chapter xmlns="http://docbook.org/ns/docbook">
  <title>Linux bringup</title>
- <para/>
+ <para>Once the skiboot firmware has been ported to your platform, the next
+  stage in the boot process is the Linux kernel. This section covers the
+  steps necessary to ensure that Linux can boot on the new platform.</para>
+
+ <note>
+  <para>There are generally <emphasis>two</emphasis> stages of Linux boot on an
+  OpenPOWER machine: the kernel used for the petitboot bootloader, and the
+  kernel used for the user's installed operating system image. The petitboot
+  kernel is stored in firmware, and ships with the machine. The operating system
+  image is typically installed by the end-user, but may also be provided
+  as a factory pre-install.</para>
+ </note>
+
+ <para>When the system has booted, you can access the skiboot firmware log
+  through the file at <filename>/sys/firmware/opal/msglog</filename>. You can
+  use this to investigate any firmware issues, access debugging printouts,
+  or check for unexpected error messages.</para>
+
+ <para>If the system does not boot to a Linux environment, there may be
+  something wrong with the Linux build, the skiboot platform code, or even
+  the platform hardware. Because there could be a wide range of causes, please
+  contact the OpenPOWER community with details of the failure.</para>
+
+ <!-- todo: common boot failure scenarios -->
+
+ <section>
+  <title>OpenPOWER core kernel support</title>
+
+  <para>Generally, there should not be any need for core kernel changes to
+   support your new platform; the default kernel configuration will generally
+   boot without any changes, as the platform-specific functions are abstracted
+   by the skiboot firmware.</para>
+
+  <para>However, a few checks should be performed to ensure that platform-level
+   code is working correctly.</para>
+
+  <section id="linux-warning">
+   <title>Linux runtime warnings</title>
+
+   <para>We highly reccomend an initial check for kernel warning messages;
+    these will be present in the kernel "dmesg", which can be retrieved through
+    the <command>dmesg</command> command, executed at a shell prompt.</para>
+
+   <para>Check that the dmesg output does not contain messages prefixed with
+    <computeroutput>WARNING</computeroutput>, or any stack traces. These are
+    indications that the kernel has encountered a serious error, and should
+    not be present in a production-level platform.</para>
+
+  </section>
+
+  <section id="linux-soft-lockups">
+   <title>CPU soft lockups &amp; stalls</title>
+
+   <para>If a CPU thread is not making forward progress, the kernel will detect
+    this and trigger a "soft lockup". These may be indicated with a soft-lockup
+    message, like the following "NMI watchdog" message:</para>
+
+<screen>[   36.803240] NMI watchdog: BUG: soft lockup - CPU#2 stuck for 23s! [swapper/2:0]
+[   36.803425] Modules linked in: hid_generic ast i2c_algo_bit drm_kms_helper ttm
+[   36.803436] CPU: 2 PID: 0 Comm: swapper/2 Not tainted 4.4.0 #28
+[   36.803438] task: c000003c8fe8e7b0 ti: c000003c97530000 task.ti: c000003c97530000
+[   36.803440] NIP: c000000000010a24 LR: c000000000010a24 CTR: c00000000060c2f0
+[   36.803442] REGS: c000003c97533510 TRAP: 0901   Not tainted (4.4.0)
+</screen>
+
+   <para>Alternatively, a stall message:</para>
+
+<screen>[   24.231450] INFO: rcu_sched detected stalls on CPUs/tasks:
+[   24.231453]  84-...: (1 GPs behind) idle=28f/1/0 softirq=132/146 fqs=2099
+[   24.231463]  (detected by 56, t=2102 jiffies, g=-296, c=-297, q=4182)
+</screen>
+
+   <para>both are followed by a register dump and call trace.</para>
+
+   <para>These soft lockups can indicate problems with the low-level platform
+    code, such as:
+    <itemizedlist>
+     <listitem>
+      <para>interrupt floods,</para>
+     </listitem>
+     <listitem>
+      <para>locking issues; and</para>
+     </listitem>
+     <listitem>
+      <para>blocking in skiboot firmware.</para>
+     </listitem>
+    </itemizedlist>
+    </para>
+
+    <para>If you need assistance debugging a soft lockup problem, contact the
+    OpenPOWER development community.</para>
+
+  </section>
+
+  <section id="linux-lpc-serirq">
+   <title>LPC interrupts</title>
+   <para>One particular item to check is whether the LPC interrupt is being
+    routed through the operating system to skiboot. When the first interrupt
+    has been received, skiboot will log a message like the following:</para>
+
+   <screen>[12841231233,7] UART: IRQ functional !</screen>
+
+   <para>This message indicates that the interrupt is being received correctly.
+    If this is <emphasis>not</emphasis> present, then check the LPC
+    serial IRQ configuration (including on the BMC), and that the CPLD is
+    running to decode the serirq line.</para>
+
+   <para>Note that a system will still be semi-functional without a working
+    LPC interrupt. In this case, OPAL firmware will revert to polling mode.
+    However, a platform should <emphasis>not</emphasis> use this fallback
+    in production-level firmware, as it will severely reduce console
+    usability, IPMI throughput, and system performance.</para>
+  </section>
+
+ </section>
+
+ <section>
+  <title>Device driver support</title>
+
+  <para>If your platform includes new IO devices, then these will need to be
+   included in the Linux kernel. For the petitboot environment, this involves
+   compiling-in the necessary drivers (see <xref linkend="petitboot"/> for
+   details on how to do this). For the end-users' operating systems, the drivers
+   should be included in the Linux distribution's default kernel package. It's
+   likely that a driver for your IO device already exists, and is present in
+   the kernel packages. If this is not the case, talk to the device vendor
+   about support in Linux.</para>
+
+ </section>
+
+
 </chapter>
