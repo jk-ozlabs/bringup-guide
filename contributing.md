@@ -45,8 +45,8 @@ You'll need:
 
 On an Ubuntu machine, you should be able to:
 
-    sudo apt-get install docbook-xsl-ns docbook5-xml \
-	    libsaxon-java libxerces2-java libxslthl-java fop
+    sudo apt-get install docbook-xsl docbook-xsl-ns docbook5-xml \
+	    libsaxon-java libxerces2-java libxslthl-java fop fonts-inconsolata
 
 The makefile & XSL sources expect system XML data to be installed in
 `/usr/share/xml`, and the java libraries under `/usr/share/java`. If this isn't
