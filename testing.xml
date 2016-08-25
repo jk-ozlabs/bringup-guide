@@ -1,5 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
-<chapter xmlns="http://docbook.org/ns/docbook">
- <title>Testing &amp; verification</title>
+<chapter
+ xmlns="http://docbook.org/ns/docbook"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ >
+ <title>Testing &amp; Verification</title>
  <para/>
+ <section>
+  <title>Firmware Test Suite (FWTS)</title>
+
+  <para>Firmware Test Suite (FWTS) is a multi-platform test suite that performs
+   system compliance and compatibility verifications to assure the integrity of
+   firmware.  In this document we will focus on the OpenPOWER Abstraction Layer
+   (OPAL) firmware.</para>
+  <para>See the following URL for a full description of the scope of FWTS
+   beyond OpenPOWER</para>
+  <para><link xlink:href="https://wiki.ubuntu.com/FirmwareTestSuite"/>.
+  </para>
+ </section>
+
+ <section>
+  <title>FWTS OpenPOWER Usage Overview</title>
+  <para>Once the FWTS tool is installed on an OpenPOWER machine (installed
+   either by booting from a USB stick or by installing the source code and
+   building the binaries) the following is how to run the full set of tests
+   for FWTS on an OpenPOWER machine.</para>
+
+  <section>
+   <title>Run FWTS in Batch Mode</title>
+   <screen>~$ sudo fwts</screen>
+   <para>The results of the batch tests are dumped to the file
+    <filename>results.log</filename>.  Reviewing the
+    <filename>results.log</filename> file there will be information on the test
+    run and if the test was successful, failed or skipped if not applicable on
+    the target machine.</para>
+   <para>See <xref linkend="fwts-output"/> for OpenPOWER validation
+    criteria.</para>
+  </section>
+
+  <section>
+   <title>List All the FWTS tests</title>
+   <para>To query for a complete list of available individual tests, run the
+    following:</para>
+   <screen>~$ fwts --show-tests</screen>
+  </section>
+
+  <section>
+   <title>Run a single FWTS test</title>
+   <para>To run an individual test, run the following command as
+    a sample:</para>
+   <screen>~$ sudo fwts dt_base</screen>
+  </section>
+
+  <section>
+   <title>Tests NOT for OpenPOWER</title>
+   <para>If you are running the FWTS tests on OpenPOWER machines, some
+    tests will not be available due to the lack of features on the target
+    hardware platform, e.g.</para>
+   <screen>~$ sudo fwts uefibootpath
+Cannot detect any UEFI firmware. Aborted.
+   </screen>
+  </section>
+
+ </section>
+
+ <section>
+  <title>FWTS Install Options</title>
+  <para>Choose one of the following methods to setup the FWTS tools.</para>
+  <section>
+   <title>FirmwareTestSuiteLive - Bootable USB image</title>
+   <para>See the following URL for a description of where to get the OpenPOWER
+    bootable USB image</para>
+   <para>
+    <link
+     xlink:href="https://wiki.ubuntu.com/FirmwareTestSuite/FirmwareTestSuiteLive"/>
+   </para>
+  </section>
+
+  <section>
+   <title>GIT Source - Build Your Own FWTS</title>
+   <para>Clone the FWTS git source tree and build.</para>
+   <screen>~$ git clone git://kernel.ubuntu.com/hwe/fwts.git
+~$ cd fwts</screen>
+   <para>See the <filename>README</filename> for packages to be
+    installed.</para>
+    <screen>~/fwts$ autoreconf -ivh
+~/fwts$ . /configure
+~/fwts$ sudo make install</screen>
+   <para>If desired to remove FWTS, run the following command:</para>
+   <screen>~/fwts$ sudo make uninstall</screen>
+  </section>
+
+ </section>
+
+ <section xml:id="fwts-output">
+  <title>FWTS Test Output to Verify</title>
+  <para>The two outputs below show the OpenPOWER sections of the standard
+   output and the <filename>results.log</filename> output content for
+   verification.</para>
+  <para>If the test output shows a failure, the
+   <filename>results.log</filename> will indicate the error and what advice is
+   recommended to resolve or report the issue for corrective action and
+   resolution.</para>
+
+  <section>
+   <title>OpenPOWER Standard Output</title>
+   <screen>
+    Test OPAL Processor Recovery Diagnostics Info
+      OPAL Processor Recovery Diagnostics Info       1 passed
+
+    Test OPAL MTD Info
+      OPAL MTD Info                                  1 passed
+
+    Test Run OLOG scan and analysis checks
+      OLOG scan and analysis checks results          1 passed
+
+    Test BMC Info
+      BMC Info                                       1 passed
+
+    Test Device tree system information test
+      Check model property                           1 passed
+      Check system-id property                       1 passed
+      Check OpenPOWER Reference compatible           1 passed
+
+    Test Base device tree validity check
+      Check device tree presence                     1 passed
+      Check device tree baseline validity            1 passed
+      Check device tree warnings                     1 passed
+
+   </screen>
+  </section>
+
+  <section>
+   <title>OpenPOWER Output - <filename>results.log</filename></title>
+   <screen>
+    prd_info: OPAL Processor Recovery Diagnostics Info
+    --------------------------------------------------------------------
+    Test 1 of 1: OPAL Processor Recovery Diagnostics Info
+    OPAL PRD Version is 1
+    OPAL PRD service (opal-prd.service) was restarted after stopping it to
+    allow checks. This is informational only, no action needed.
+    PASSED: Test 1, OPAL PRD info passed.
+
+    ====================================================================
+    1 passed, 0 failed, 0 warning, 0 aborted, 0 skipped, 0 info only.
+    ====================================================================
+
+
+    mtd_info: OPAL MTD Info
+    --------------------------------------------------------------------
+    MTD Info initialization validated FDT for 'ibm,opal-nvram'.
+    Test 1 of 1: OPAL MTD Info
+    MTD Info validated FDT of '/ibm,opal/flash@0'.
+    *************** STARTING checks of MTD devices ***************
+    MTD device '/dev/mtd0' is verified and is read/write.
+    MTD device '/dev/mtd0' attributes follow:
+    MTD Type=3 (3=MTD_NORFLASH),
+    MTD Flags=1024 (1024=MTD_WRITEABLE), MTD total size=67108864 bytes,
+    MTD erase size=4096 bytes, MTD write size=1, MTD oob size=0
+    MTD device '/dev/mtd0' header eye-catcher 'PART' verified.
+    *************** ENDING checks of MTD devices *****************
+    PASSED: Test 1, OPAL MTD info passed.
+
+    ====================================================================
+    1 passed, 0 failed, 0 warning, 0 aborted, 0 skipped, 0 info only.
+    ====================================================================
+
+
+    olog: Run OLOG scan and analysis checks.
+    --------------------------------------------------------------------
+    Test 1 of 1: OLOG scan and analysis checks results.
+    PASSED: Test 1, OLOG scan and analysis passed.
+
+    ====================================================================
+    1 passed, 0 failed, 0 warning, 0 aborted, 0 skipped, 0 info only.
+    ====================================================================
+
+
+    bmc_info: BMC Info
+    --------------------------------------------------------------------
+    Test 1 of 1: BMC Info
+    IPMI Version is 2.0
+    PASSED: Test 1, BMC info passed.
+
+    ====================================================================
+    1 passed, 0 failed, 0 warning, 0 aborted, 0 skipped, 0 info only.
+    ====================================================================
+
+
+    dt_sysinfo: Device tree system information test
+    --------------------------------------------------------------------
+    Test 1 of 3: Check model property
+    DTPrintableProperty with a string value of "8335-GTA        " passed
+    PASSED: Test 1, sysinfo property model is valid
+
+    Test 2 of 3: Check system-id property
+    DTPrintableProperty with a string value of "0000000000000000" passed
+    PASSED: Test 2, sysinfo property system-id is valid
+
+    Test 3 of 3: Check OpenPOWER Reference compatible
+    Matched reference model, device tree "compatible" is "ibm,firestone"
+    and "model" is "8335-GTA        "
+    PASSED: Test 3, OpenPOWER Reference Compatible passed
+
+    ====================================================================
+    3 passed, 0 failed, 0 warning, 0 aborted, 0 skipped, 0 info only.
+    ====================================================================
+
+
+    dt_base: Base device tree validity check
+    --------------------------------------------------------------------
+    Test 1 of 3: Check device tree presence
+    PASSED: Test 1, Device tree present
+
+    Test 2 of 3: Check device tree baseline validity
+    PASSED: Test 2, Device tree data valid
+
+    Test 3 of 3: Check device tree warnings
+    PASSED: Test 3, No warnings from dtc
+
+    ====================================================================
+    3 passed, 0 failed, 0 warning, 0 aborted, 0 skipped, 0 info only.
+    ====================================================================
+
+   </screen>
+  </section>
+
+ </section>
 </chapter>

@@ -67,6 +67,13 @@
      <entry>Machine type &amp; model displayed correctly in Petitboot UI</entry>
     </row>
 
+    <row>
+     <entry>FWTS Test Output Verified</entry>
+     <entry>
+      <xref linkend="fwts-output" xrefstyle="select: labelnumber"/>
+     </entry>
+    </row>
+
    </tbody>
   </tgroup>
  </table>

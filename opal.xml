@@ -133,6 +133,7 @@
     <para>Failing to change the compatible string from a reference-platform
      identifier will cause your platform to fail OpenPOWER compliance
      checks.</para>
+    <para>See <xref linkend="fwts-output"/>.</para>
    </warning>
 
   </section>
