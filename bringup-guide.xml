@@ -15,6 +15,13 @@
     </personname>
     <email>jk@ozlabs.org</email>
    </author>
+   <author>
+    <personname>
+     <firstname>Deb</firstname>
+     <surname>McLemore</surname>
+    </personname>
+    <email>debmc@linux.vnet.ibm.com</email>
+   </author>
   </authorgroup>
  </info>
 
